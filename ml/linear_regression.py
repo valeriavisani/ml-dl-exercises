@@ -1,11 +1,11 @@
-import pandas as pd
-from pandas.plotting import scatter_matrix
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 from scipy.stats import zscore
 from sklearn import linear_model
 from statsmodels import api as sm
+from mpl_toolkits.mplot3d import axes3d
+from pandas.plotting import scatter_matrix
 
 # python -m ml.linear_regression
 
@@ -72,7 +72,7 @@ lin_model.fit(x, y)
 
 w1 = lin_model.coef_ # weights of the model are stored here
 w0 = lin_model.intercept_ # and here it is the intercept
-# (first value of w that isn't a coefficient)
+# (first value of w that isn't a coefficient, bias)
 
 # Compute the y component of the regression line
 
