@@ -281,9 +281,9 @@ for i in range(N):
   sigmas = gnb_classifier.var_[class_, :]
 
   # sample x1
-  new_samples[i,0] = np.random.normal(thetas[0], sigmas[0], 1)
+  new_samples[i, 0] = np.random.normal(thetas[0], np.sqrt(sigmas[0]))
   # sample x2
-  new_samples[i,1] = np.random.normal(thetas[1], sigmas[1], 1)
+  new_samples[i, 1] = np.random.normal(thetas[1], np.sqrt(sigmas[1]))
 
 # divide samples by class
 new_setosa = new_samples[new_t, :]
