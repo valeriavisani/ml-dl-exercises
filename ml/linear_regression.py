@@ -1,13 +1,9 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import zscore
 from sklearn import linear_model
 from statsmodels import api as sm
-from mpl_toolkits.mplot3d import axes3d
 from pandas.plotting import scatter_matrix
-
-# python -m ml.linear_regression
 
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']

@@ -5,8 +5,7 @@ from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
 from matplotlib.colors import ListedColormap
 from sklearn.linear_model import LogisticRegression
-
-# python -m ml.model_selection
+from sklearn.model_selection import cross_val_score
 
 # Here we will see how to select a model in the first place
 # Studying bias variance tradeoff we understood how to manage underfittig and overfitting
@@ -221,7 +220,9 @@ C = np.dot(X_tilde.T, X_tilde)
 
 print(C)
 
-eigenvalues, eigenvectors = np.linalg.eig(C)
+eigenvalues, eigenvectors = np.linalg.eigh(C)
+idx = np.argsort(eigenvalues)[::-1]
+eigenvalues, eigenvectors = eigenvalues[idx], eigenvectors[:, idx]
 
 print('Eigenvalues:\n', eigenvalues)
 print('Eigenvectors:\n', eigenvectors)
@@ -468,7 +469,7 @@ handles, labels = axes[0, 0].get_legend_handles_labels()
 fig.legend(handles, labels, loc='upper right')
 
 plt.tight_layout()
-plt.savefig("ml/plot/ms_fig4.png", dpi=150)
+plt.savefig("ml/plot/ms_fig5.png", dpi=150)
 
 
 # k-NN
@@ -491,6 +492,7 @@ plt.savefig("ml/plot/ms_fig4.png", dpi=150)
 
 parameters = np.arange(1, 11)
 train_accuracy = []
+cv_accuracy = []
 test_accuracy = []
 
 for k in parameters:
@@ -501,6 +503,8 @@ for k in parameters:
   accuracy = sum(y_hat == y_train) / len(y_train)
   train_accuracy.append(accuracy)
 
+  cv_accuracy.append(cross_val_score(neighbors.KNeighborsClassifier(k), X_train, y_train, cv=5).mean())
+
   y_hat = knn_classifier.predict(X_test)
   accuracy = sum(y_hat == y_test) / len(y_test)
   test_accuracy.append(accuracy)
@@ -508,12 +512,18 @@ for k in parameters:
 
 plt.figure(figsize=(12, 7))
 plt.plot(parameters, train_accuracy, label='train accuracy')
+plt.plot(parameters, cv_accuracy, label='cv accuracy')
 plt.plot(parameters, test_accuracy, label='test accuracy')
 plt.xlabel('k')
 plt.ylabel('accuracy')
 plt.ylim([0, 1])
 plt.legend()
-plt.savefig("ml/plot/ms_fig5.png", dpi=150)
+plt.savefig("ml/plot/ms_fig6.png", dpi=150)
+
+best_k = parameters[np.argmax(cv_accuracy)]
+best_knn = neighbors.KNeighborsClassifier(best_k).fit(X_train, y_train)
+print('Best k (cross-validation):', best_k)
+print('Test accuracy with best k:', best_knn.score(X_test, y_test))
 
 # We creat k k-NN classifier
 # For each k we predict the training set and compute the training accurancy

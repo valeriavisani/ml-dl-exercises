@@ -9,8 +9,6 @@ from sklearn.linear_model import Perceptron
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 
-# python -m ml.linear_classification
-
 # Supervised Learning
 # regression --> target continuos
 # classification --> target discrete
@@ -246,8 +244,6 @@ multi_log_classifier.fit(X, multi_t)           # training
 # Maximum Likelihood Estimation (MLE)
 # Estimates the model parameters by maximizing the likelihood
 # of the training data.
-
-from sklearn.naive_bayes import GaussianNB
 
 gnb_classifier = GaussianNB()
 gnb_classifier.fit(X, t)

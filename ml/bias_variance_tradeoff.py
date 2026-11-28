@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model
-from mpl_toolkits.mplot3d import Axes3D
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import PolynomialFeatures
 
-# python -m ml.bias_variance_tradeoff
+np.random.seed(0)
 
 # E[(t-y(x))^2] = σ^2 + Var[y(x)] + (f(x)-E[y(x)])^2
 # Error = noise + variance + bias^2
@@ -307,14 +306,14 @@ for degree in range(10):
     y_vali_pred = lin_model.predict(x_vali_tr)
     MSE = mean_squared_error(y_fold_vali, y_vali_pred)
     MSE_cross[degree] += MSE
-    MSE_cross[degree] /= k_fold
+  MSE_cross[degree] /= k_fold
 
 
 plt.figure(figsize=(16,9))
 plt.plot(models_mse, label='Training MSE')
 plt.plot(models_mse_test, label='Test MSE')
 plt.plot(models_mse_vali, label='Validation MSE')
-plt.plot(MSE_cross/k_fold, label='Cross-Validation MSE')
+plt.plot(MSE_cross, label='Cross-Validation MSE')
 
 best_model = np.argmin(MSE_cross)
 plt.axvline(best_model)
